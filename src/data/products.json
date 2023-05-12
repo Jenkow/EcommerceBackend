@@ -1,0 +1,65 @@
+[
+  {
+    "title": "vaper",
+    "description": "cigarrillo electronico",
+    "price": 10000,
+    "stock": 0,
+    "id": 1
+  },
+  {
+    "title": "rtx 3080",
+    "description": "placa de video",
+    "price": 350000,
+    "stock": 9,
+    "id": 2
+  },
+  {
+    "title": "ojota",
+    "description": "pa caminar",
+    "price": 15000,
+    "stock": 8,
+    "id": 3
+  },
+  {
+    "title": "pantalon",
+    "description": "pa las gambas",
+    "price": 30000,
+    "stock": 2,
+    "id": 4
+  },
+  {
+    "title": "remera",
+    "description": "pal pecho",
+    "price": 7000,
+    "stock": 6,
+    "id": 5
+  },
+  {
+    "title": "anteojos",
+    "description": "pa los ojos",
+    "price": 25000,
+    "stock": 16,
+    "id": 6
+  },
+  {
+    "title": "gorro",
+    "description": "pa la cabeza",
+    "price": 8000,
+    "stock": 8,
+    "id": 7
+  },
+  {
+    "title": "guantes",
+    "description": "pa las manos",
+    "price": 3000,
+    "stock": 25,
+    "id": 8
+  },
+  {
+    "title": "CAMBIADO",
+    "description": "pa las patas",
+    "price": 35000,
+    "stock": 8,
+    "id": 9
+  }
+]
