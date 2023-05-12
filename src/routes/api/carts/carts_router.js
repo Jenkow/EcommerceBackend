@@ -1,43 +1,51 @@
-import {Router} from 'express';
-import CartManager from '../managers/CartManager.js'
+import { Router } from 'express';
+import CartManager from '../../../managers/CartManager.js'
 let manager = new CartManager('./src/data/carts.json')
 
 const router = Router()
 
 let carts_route = '/'
-let carts_function = (req, res) => {
-    let carts = manager.getCarts()
-    if (carts.length > 0) {
-        return res.json({
-            status: 200,
-            carts
-        })
-    } else {
-        return res.json({
-            status: 404,
-            response: 'not found'
-        })
+let carts_function = async (req, res, next) => {
+    try {
+        let carts = manager.getCarts()
+        if (carts.length > 0) {
+            return res.json({
+                status: 200,
+                carts
+            })
+        } else {
+            return res.json({
+                status: 404,
+                response: 'not found'
+            })
+        }
+    } catch (error) {
+        next(error)
     }
+
 }
 router.get(carts_route, carts_function)
 
 
 let cartById_route = '/:cid'
-let cartById_function = (req, res) => {
-    let id = Number(req.params.cid)
-    let one = manager.getCartById(id)
-    if (one) {
-        return res.json({
-            status: 200,
-            response: one
-        })
-    } else {
-        return res.json({
-            status: 404,
-            response: 'not found'
-        })
+let cartById_function = async (req, res, next) => {
+    try {
+        let id = Number(req.params.cid)
+        let one = manager.getCartById(id)
+        if (one) {
+            return res.json({
+                status: 200,
+                response: one
+            })
+        } else {
+            return res.json({
+                status: 404,
+                response: 'not found'
+            })
+        }
+    } catch (error) {
+        next(error)
     }
-
 }
 router.get(cartById_route, cartById_function)
 
@@ -45,7 +53,7 @@ router.get(cartById_route, cartById_function)
 
 router.post(
     '/',
-    async (req, res) => {
+    async (req, res, next) => {
         try {
             let cart = await manager.addCart([])
             return res.json({
@@ -54,11 +62,7 @@ router.post(
                 response: 'created!'
             })
         } catch (error) {
-            console.log(error)
-            return res.json({
-                status: 500,
-                response: 'error'
-            })
+            next(error)
         }
     }
 )
@@ -68,9 +72,9 @@ router.post(
 
 router.put(
     '/:cid/product/:pid/:units',
-    async (req, res) => {
-        try{
-            if (req.body && req.params.cid && req.params.pid && req.params.units){
+    async (req, res, next) => {
+        try {
+            if (req.body && req.params.cid && req.params.pid && req.params.units) {
                 let cid = Number(req.params.cid)
                 let data = {
                     id: Number(req.params.pid),
@@ -83,12 +87,8 @@ router.put(
                     response: 'cart updated'
                 })
             }
-        } catch(error) {
-            console.log(error)
-            return res.json({
-                status: 500,
-                response: 'error'
-            })
+        } catch (error) {
+            next(error)
         }
     }
 )
@@ -97,9 +97,9 @@ router.put(
 
 router.delete(
     '/:cid/product/:pid/:units',
-    async (req, res) => {
+    async (req, res, next) => {
         try {
-            if (req.body && req.params.cid && req.params.pid && req.params.units){
+            if (req.body && req.params.cid && req.params.pid && req.params.units) {
                 let cid = Number(req.params.cid)
                 let data = {
                     id: Number(req.params.pid),
@@ -112,12 +112,8 @@ router.delete(
                     response: 'cart updated'
                 })
             }
-        } catch(error) {
-            console.log(error)
-            return res.json({
-                status: 500,
-                response: 'error'
-            })
+        } catch (error) {
+            next(error)
         }
     }
 )

@@ -1,19 +1,16 @@
 import express from 'express'
-import productsRouter from './routes/products_router.js'
-import cartsRouter from './routes/carts_router.js'
+import errorHandler from './middlewares/errorHandler.js'
+import not_found_handler from './middlewares/notFoundHandler.js'
+import router from './routes/index.js'
 
 let server = express()
 let PORT = 8080
 let ready = () => console.log("server ready on port: " + PORT)
+
 server.listen(PORT, ready)
+server.use('/public', express.static('public'))
 server.use(express.urlencoded({ extended: true }))
 server.use(express.json())
-
-let index_route = '/'
-let index_function = (req, res) => {
-    return res.send('BIENVENIDO AL INDEX')
-}
-server.get(index_route, index_function)
-
-server.use('/api/products', productsRouter)
-server.use('/api/carts', cartsRouter)
+server.use('/', router)
+server.use(errorHandler)
+server.use(not_found_handler)
