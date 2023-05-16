@@ -21,7 +21,7 @@ class ProductManager {
         }
     }
 
-    async addProduct({ title, description, price, thumbnail, stock }) {
+    async addProduct({ title, description, price, stock, thumbnail}) {
         try {
             let id
             if (this.products.length === 0) {

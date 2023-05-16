@@ -1,16 +1,45 @@
-import express from 'express'
-import errorHandler from './middlewares/errorHandler.js'
-import not_found_handler from './middlewares/notFoundHandler.js'
-import router from './routes/index.js'
+import server from './app.js'
+import { Server } from 'socket.io'
+import CartManager from './managers/CartManager.js'
+let c_manager = new CartManager('./src/data/carts.json')
 
-let server = express()
 let PORT = 8080
 let ready = () => console.log("server ready on port: " + PORT)
 
-server.listen(PORT, ready)
-server.use('/public', express.static('public'))
-server.use(express.urlencoded({ extended: true }))
-server.use(express.json())
-server.use('/', router)
-server.use(errorHandler)
-server.use(not_found_handler)
+let http_server = server.listen(PORT, ready)
+let socket_server = new Server(http_server)
+
+let chats = []
+
+socket_server.on(
+    'connection',
+    socket => {
+        console.log(`client ${socket.client.id} connected`)
+        socket.on(
+            'test',
+            data => {
+                console.log(data.text)
+            }
+        )
+        socket.on(
+            'auth', () => {
+                socket.emit('all_messagess', chats)
+            }
+        )
+        socket.on(
+            'new_message',
+            (data) => {
+                chats.push(data)
+                socket_server.emit('all_messagess', chats)
+            }
+        )
+        socket.on(
+            'add_to_cart', 
+            (data) => {
+                console.log(data)
+                c_manager.updateCart(1, data)
+            }
+        )
+    }
+)
+

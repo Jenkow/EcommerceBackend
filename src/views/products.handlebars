@@ -1,0 +1,12 @@
+<h1>Products</h1>
+<div class="d-flex justify-content-evenly flex-wrap">
+    {{#each products}}
+    <div class="card" style="width: 18rem;">
+        <img src={{this.thumbnail}} class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">{{this.title}}</h5>
+            <a id="to_cart" href="products/{{this.id}}" class="btn btn-primary">+info</a>
+        </div>
+    </div>
+    {{/each}}
+</div>

@@ -1,0 +1,15 @@
+<div class="card" style="width: 18rem;">
+  <img src={{product.thumbnail}} class="card-img-top" alt="...">
+  <div class="card-body">
+    <span id="pid">{{product.id}}</span>
+    <h5 class="card-title">{{product.title}}</h5>
+    <p class="card-text">{{product.description}}</p>
+    <p class="card-text">stock: {{product.stock}}</p>
+    <div class="form-outline">
+      <input min="0" max={{product.stock}} type="number" id="quantity_to_add" class="form-control"
+        placeholder="Quantity" />
+    </div>
+    <a id="to_cart" href="#" class="btn btn-primary">Add to cart</a>
+  </div>
+</div>
+

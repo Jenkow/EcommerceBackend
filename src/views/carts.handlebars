@@ -1,0 +1,39 @@
+<h1>Cart</h1>
+{{!-- <div class="d-flex justify-content-evenly flex-wrap">
+    {{#each products}}
+    <div class="card" style="width: 18rem;">
+        <img src={{this.thumbnail}} class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">{{this.title}}</h5>
+            <a href="products/{{this.id}}" class="btn btn-primary">+info</a>
+        </div>
+    </div>
+    {{/each}}
+</div> --}}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">id</th>
+            <th scope="col">Title</th>
+            <th scope="col">Units</th>
+            <th scope="col">Sub-total</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each products}}
+        <tr>
+            <th scope="row">{{this.id}}</th>
+            <td>{{this.title}}</td>
+            <td>{{this.units}}</td>
+            <td>${{this.sub_total}}</td>
+        </tr>
+        {{/each}}
+        <tr>
+            <th scope="row"></th>
+            <td></td>
+            <td>Total:</td>
+            <td>${{total}}</td>
+        </tr>
+    </tbody>
+</table>

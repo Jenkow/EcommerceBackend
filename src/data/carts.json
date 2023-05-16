@@ -4,10 +4,14 @@
     "products": [
       {
         "id": 2,
-        "units": 3
+        "units": 6
       },
       {
         "id": 5,
+        "units": 1
+      },
+      {
+        "id": 4,
         "units": 1
       }
     ]
@@ -48,15 +52,6 @@
       {
         "id": 7,
         "units": 2
-      }
-    ]
-  },
-  {
-    "id": 5,
-    "products": [
-      {
-        "id": 2,
-        "units": 1
       }
     ]
   }
