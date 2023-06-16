@@ -1,6 +1,5 @@
 import { Router } from "express";
-import ProductManager from '../../managers/ProductManager.js'
-let manager = new ProductManager('./src/data/products.json')
+import Product from "../../models/product.model.js";
 
 const router = Router()
 
@@ -8,7 +7,7 @@ router.get(
     '/',
     async (req, res, next) => {
         try{
-            let products = await(manager.getProducts())
+            let products = await Product.find().lean()
             return res.render(
                 'products',
                 {

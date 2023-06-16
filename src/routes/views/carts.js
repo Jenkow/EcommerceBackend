@@ -1,8 +1,7 @@
 import { Router } from "express";
+import Cart from "../../models/cart.model.js";
+import Product from "../../models/product.model.js";
 import CartManager from '../../managers/CartManager.js'
-let c_manager = new CartManager('./src/data/carts.json')
-import ProductManager from '../../managers/ProductManager.js'
-let p_manager = new ProductManager('./src/data/products.json')
 
 const router = Router()
 
@@ -10,19 +9,22 @@ router.get(
     '/',
     async (req, res, next) => {
         try{
-            let cart = c_manager.getCartById(1)
+            let carts = await Cart.find()
+            let cart = carts[0]     //hardcodeo para usar el primero carrito
             let products = []
             let total = 0;
-            (cart.products).forEach(p => {
-                let product = p_manager.getProductById(p.id)
-                total += p.units*product.price
-                products.push({
-                    id: p.id,
-                    title: product.title,
-                    units: p.units,
-                    sub_total: (p.units*product.price)
-                })
-            });
+            await Promise.all(
+                cart.products.map(async p => {
+                    let product = await Product.findById(p._id)
+                    total += p.units*product.price
+                    products.push({
+                        _id: p._id,
+                        title: product.title,
+                        units: p.units,
+                        sub_total: (p.units*product.price)
+                    })               
+                }))
+            console.log('FINAL: '+products)
             return res.render(
                 'carts',
                 {

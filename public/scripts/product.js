@@ -8,7 +8,7 @@ let id = document.getElementById('pid')
 
 function to_cart (e) {
     socket.emit('add_to_cart',{
-        id: Number(id.innerHTML),
+        id: id.innerHTML,
         units : Number(units.value)
     })
 }

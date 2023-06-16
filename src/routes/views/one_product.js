@@ -1,6 +1,5 @@
 import { Router } from "express";
-import ProductManager from '../../managers/ProductManager.js'
-let manager = new ProductManager('./src/data/products.json')
+import Product from "../../models/product.model.js";
 
 const router = Router()
 
@@ -8,8 +7,8 @@ router.get(
     '/:pid',
     async (req, res, next) => {
         try{
-            let id = Number(req.params.pid)
-            let product = await(manager.getProductById(id))
+            let id = req.params.pid
+            let product = await Product.findById(id).lean()
             return res.render(
                 'one_product',
                 {

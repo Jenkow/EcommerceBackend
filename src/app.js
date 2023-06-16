@@ -1,4 +1,5 @@
 import express from 'express'
+import { connect } from 'mongoose'
 import router from './routes/index.js'
 import errorHandler from './middlewares/errorHandler.js'
 import not_found_handler from './middlewares/notFoundHandler.js'
@@ -17,5 +18,9 @@ server.use(express.json())
 server.use('/', router)
 server.use(errorHandler)
 server.use(not_found_handler)
+
+connect('mongodb+srv://jero:hola1234@dbjero.hxnmsoe.mongodb.net/commerce')
+    .then(()=>console.log('database connected'))
+    .catch(err=>console.log(err))
 
 export default server
