@@ -1,7 +1,6 @@
 import { Router } from "express";
 import Cart from "../../models/cart.model.js";
 import Product from "../../models/product.model.js";
-import CartManager from '../../managers/CartManager.js'
 
 const router = Router()
 
@@ -24,7 +23,6 @@ router.get(
                         sub_total: (p.units*product.price)
                     })               
                 }))
-            console.log('FINAL: '+products)
             return res.render(
                 'carts',
                 {

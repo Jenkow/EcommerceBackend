@@ -1,7 +1,10 @@
 import { Router } from 'express';
 import Cart from '../../../models/cart.model.js'
+import bills_router from './bills_router.js'
 
 const router = Router()
+
+router.use('/bills', bills_router)
 
 let carts_route = '/'
 let carts_function = async (req, res, next) => {

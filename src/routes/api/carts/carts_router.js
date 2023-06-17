@@ -1,8 +1,9 @@
 import { Router } from 'express';
-import CartManager from '../../../managers/CartManager.js'
-let manager = new CartManager('./src/data/carts.json')
+import bills_router from './bills_router.js'
 
 const router = Router()
+
+router.use('/bills', bills_router)
 
 let carts_route = '/'
 let carts_function = async (req, res, next) => {

@@ -4,7 +4,8 @@
     <span id="pid">{{product._id}}</span>
     <h5 class="card-title">{{product.title}}</h5>
     <p class="card-text">{{product.description}}</p>
-    <p class="card-text">stock: {{product.stock}}</p>
+    <p class="card-text">Stock: {{product.stock}}</p>
+    <p class="card-text">Price: ${{product.price}}</p>
     <div class="form-outline">
       <input min="0" max={{product.stock}} type="number" id="quantity_to_add" class="form-control"
         placeholder="Quantity" />

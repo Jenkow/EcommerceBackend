@@ -7,7 +7,6 @@ let products_route = '/'
 let products_function = async (req, res, next) => {
     try {
         let products = await Product.find()
-        console.log(products)
         if (products.length > 0) {
             return res.json({
                 status: 200,
