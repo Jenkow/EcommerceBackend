@@ -1,6 +1,15 @@
 <h1>Products</h1>
+<form id="searchBar" action="/products?title=" method="GET">
+    <div class="d-flex">
+        <div class="mb-3" style="width:75rem">
+            <input name="title" class="form-control" id="filter" aria-describedby="filterHelp" placeholder="Enter filter">
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+    </div>
+
+</form>
 <div class="d-flex justify-content-evenly flex-wrap">
-    {{#each products}}
+    {{#each products.docs}}
     <div class="card" style="width: 18rem;">
         <img src={{this.thumbnail}} class="card-img-top" alt="...">
         <div class="card-body">
@@ -9,4 +18,9 @@
         </div>
     </div>
     {{/each}}
+</div>
+<div class="d-flex justify-content-center">
+    <a href="products?page={{products.prevPage}}" class="btn btn-primary" style={{hidden.prev}}>Prev</a>
+    <h3>{{products.page}}</h3>
+    <a href="products?page={{products.nextPage}}" class="btn btn-primary" style={{hidden.next}}>Next</a>
 </div>
