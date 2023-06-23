@@ -4,6 +4,7 @@ import carts_router from './carts.js'
 import new_product_router from './new_product.js'
 import one_product_router from './one_product.js'
 import chat_router from "./chat.js";
+import signin_router from "./sign_in.js"
 
 const router = Router()
 
@@ -29,5 +30,6 @@ router.use('/carts', carts_router)
 router.use('/new_product', new_product_router)
 router.use('/products',one_product_router)
 router.use('/chat',chat_router)
+router.use('/signin',signin_router)
 
 export default router

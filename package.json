@@ -19,8 +19,12 @@
   },
   "homepage": "https://github.com/Jenkow/EcommerceBackend#readme",
   "dependencies": {
+    "connect-mongo": "^5.0.0",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "express-handlebars": "^7.0.7",
+    "express-session": "^1.17.3",
     "fs": "^0.0.1-security",
     "mongoose": "^7.2.4",
     "mongoose-paginate-v2": "^1.7.1",

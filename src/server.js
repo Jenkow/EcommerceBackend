@@ -2,7 +2,7 @@ import server from './app.js'
 import { Server } from 'socket.io'
 import Cart from './models/cart.model.js'
 
-let PORT = 8080
+let PORT = process.env.PORT
 let ready = () => console.log("server ready on port: " + PORT)
 
 let http_server = server.listen(PORT, ready)
