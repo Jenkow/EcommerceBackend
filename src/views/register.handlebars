@@ -1,0 +1,24 @@
+<h1>Register</h1>
+<form id="registerForm" action="/api/auth/register" method="POST">
+  <div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label">Name</label>
+    <input name="name" class="form-control" id="name" aria-describedby="nameHelp">
+  </div>
+  <div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label">Email</label>
+    <input name="email" type="mail" class="form-control" id="email" aria-describedby="titleHelp">
+  </div>
+  <div class="mb-3">
+    <label for="exampleInputPassword1" class="form-label">Password</label>
+    <input name="password" type="password" class="form-control" id="password">
+  </div>
+  <div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label">Photo (url) *optional</label>
+    <input name="photo" class="form-control" id="photo" aria-describedby="photoHelp">
+  </div>
+  <div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label">Age *optional</label>
+    <input name="age" type="number" class="form-control" id="age" aria-describedby="titleHelp">
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
