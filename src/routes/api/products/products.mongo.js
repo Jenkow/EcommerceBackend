@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import Product from '../../../models/product.model.js';
 
+
 const router = Router()
 
 let products_route = '/'

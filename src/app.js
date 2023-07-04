@@ -8,6 +8,8 @@ import { engine } from 'express-handlebars'
 import { __dirname } from './utils.js'
 import session from 'express-session'
 import MongoStore from 'connect-mongo'
+import passport from 'passport'
+import initializePassport from './config/passport_local.js'
 
 const server = express()
 
@@ -23,10 +25,17 @@ server.use(session({
         mongoUrl: process.env.MONGO_LINK,
         ttl: 60000
     })
-}))
+})
+)
+
 server.use('/public', express.static('public'))
 server.use(express.urlencoded({ extended: true }))
 server.use(express.json())
+initializePassport()
+server.use(passport.initialize())
+server.use(passport.session())
+
+
 server.use('/', router)
 server.use(errorHandler)
 server.use(not_found_handler)
