@@ -1,6 +1,6 @@
 import server from './app.js'
 import { Server } from 'socket.io'
-import Cart from './models/cart.model.js'
+import Cart from './dao/mongo/models/cart.model.js'
 
 let PORT = process.env.PORT
 let ready = () => console.log("server ready on port: " + PORT)

@@ -1,58 +1,46 @@
-import { Router } from 'express';
-import Product from '../../../models/product.model.js';
+import {productService} from "../service/index.js";
 
-
-const router = Router()
-
-let products_route = '/'
-let products_function = async (req, res, next) => {
-    try {
-        let products = await Product.find()
-        if (products.length > 0) {
-            return res.json({
-                status: 200,
-                products
-            })
-        } else {
-            return res.json({
-                status: 404,
-                response: 'not found'
-            })
+class ProductController { 
+    getProducts = async (req, res, next) => {
+        try {
+            let products = await productService.getProducts()
+            if (products.length > 0) {
+                return res.json({
+                    status: 200,
+                    products
+                })
+            } else {
+                return res.json({
+                    status: 404,
+                    response: 'not found'
+                })
+            }
+        } catch (error) {
+            next(error)
         }
-    } catch (error) {
-        next(error)
     }
 
-}
-router.get(products_route, products_function)
-
-
-let productById_route = '/:pid'
-let productById_function = async (req, res, next) => {
-    try {
-        let id = req.params.pid
-        let one = await Product.findById(id)
-        if (one) {
-            return res.json({
-                status: 200,
-                response: one
-            })
-        } else {
-            return res.json({
-                status: 404,
-                response: 'not found'
-            })
+    getProduct = async (req, res, next) => {
+        try {
+            let pid = req.params.pid
+            let one = await productService.getProduct(pid)
+            if (one) {
+                return res.json({
+                    status: 200,
+                    response: one
+                })
+            } else {
+                return res.json({
+                    status: 404,
+                    response: 'not found'
+                })
+            }
+        } catch (error) {
+            next(error)
         }
-    } catch (error) {
-        next(error)
     }
-}
-router.get(productById_route, productById_function)
 
-
-router.post(
-    '/',
-    async (req, res, next) => {
+    createProduct = async (req, res, next) => {
         try {
             let title = req.body.title ?? null
             let description = req.body.description ?? null
@@ -60,7 +48,7 @@ router.post(
             let thumbnail = req.body.thumbnail ?? null
             let stock = req.body.stock ?? null
             if (title && description && price && thumbnail && stock) {
-                let product = await Product.create({ title, description, price, thumbnail, stock })
+                let product = await productService.createProduct({ title, description, price, thumbnail, stock })
                 return res.json({
                     status: 201,
                     product: product.id,
@@ -76,17 +64,13 @@ router.post(
             next(error)
         }
     }
-)
 
-
-router.put(
-    '/:pid',
-    async (req, res, next) => {
+    updateProduct = async (req, res, next) => {
         try {
             if (req.body && req.params.pid) {
-                let id = req.params.pid
+                let pid = req.params.pid
                 let data = req.body
-                let product = await Product.updateOne({_id:id}, data)
+                let product = await productService.updateProduct(pid, data)
                 if (product) {
                     return res.json({
                         status: 200,
@@ -109,17 +93,12 @@ router.put(
         } catch (error) {
             next(error)
         }
-
     }
-)
 
-
-router.delete(
-    '/:pid',
-    async (req, res, next) => {
+    deleteProduct = async (req, res, next) => {
         try {
-            let id = req.params.pid
-            let deleted = await Product.deleteOne({_id:id})
+            let pid = req.params.pid
+            let deleted = await productService.deleteProduct(pid)
             return res.json({
                 status: 200,
                 deleted,
@@ -129,6 +108,6 @@ router.delete(
             next(error)
         }
     }
-)
+}
 
-export default router
+export default ProductController

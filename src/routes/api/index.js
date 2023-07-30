@@ -1,6 +1,6 @@
 import { Router } from 'express'
-import products_router from './products/products.mongo.js'
-import carts_router from './carts/carts.mongo.js'
+import products_router from './products/products.router.js'
+import carts_router from './carts/carts.router.js'
 import auth_router from './auth/auth.js'
 
 const router = Router()

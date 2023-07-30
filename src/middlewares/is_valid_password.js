@@ -1,5 +1,5 @@
 import { compareSync } from "bcrypt";
-import User from "../models/user_model.js";
+import User from "../dao/mongo/models/user_model.js";
 
 export default async function (req, res, next) {
     //let user = await User.findOne({ email: req.body.email })

@@ -1,64 +1,51 @@
-import { Router } from 'express';
-import Cart from '../../../models/cart.model.js'
-import bills_router from './bills_router.js'
+import {cartService} from "../service/index.js";
 
-const router = Router()
+class CartController { 
 
-router.use('/bills', bills_router)
-
-let carts_route = '/'
-let carts_function = async (req, res, next) => {
-    try {
-        let carts = await Cart.find()
-        if (carts.length > 0) {
-            return res.json({
-                status: 200,
-                carts
-            })
-        } else {
-            return res.json({
-                status: 404,
-                response: 'not found'
-            })
+    getCarts = async (req, res, next) => {
+        try {
+            let carts = await cartService.getCarts()
+            if (carts.length > 0) {
+                return res.json({
+                    status: 200,
+                    carts
+                })
+            } else {
+                return res.json({
+                    status: 404,
+                    response: 'not found'
+                })
+            }
+        } catch (error) {
+            next(error)
         }
-    } catch (error) {
-        next(error)
+    
     }
 
-}
-router.get(carts_route, carts_function)
-
-
-let cartById_route = '/:cid'
-let cartById_function = async (req, res, next) => {
-    try {
-        let id = req.params.cid
-        let one = await Cart.findById(id)
-        if (one) {
-            return res.json({
-                status: 200,
-                response: one
-            })
-        } else {
-            return res.json({
-                status: 404,
-                response: 'not found'
-            })
+    getCart = async (req, res, next) => {
+        try {
+            let cid = req.params.cid
+            let one = await cartService.getCart(cid)
+            if (one) {
+                return res.json({
+                    status: 200,
+                    response: one
+                })
+            } else {
+                return res.json({
+                    status: 404,
+                    response: 'not found'
+                })
+            }
+        } catch (error) {
+            next(error)
         }
-    } catch (error) {
-        next(error)
     }
-}
-router.get(cartById_route, cartById_function)
 
-
-
-router.post(
-    '/',
-    async (req, res, next) => {
+    createCart = async (req, res, next) => {
         try {
             let products = []
-            let cart = await Cart.create({products})
+            let cart = await cartService.createCart({products})
             return res.json({
                 status: 201,
                 cart: cart.id,
@@ -68,20 +55,14 @@ router.post(
             next(error)
         }
     }
-)
 
-
-
-
-router.put(
-    '/:cid/product/:pid/:units',
-    async (req, res, next) => {
+    updateCart = async (req, res, next) => {
         try {
             if (req.body && req.params.cid && req.params.pid && req.params.units) {
                 let cid = req.params.cid
                 let pid = req.params.pid
                 let units = Number(req.params.units)
-                let cart = await Cart.findOne({_id:cid})
+                let cart = await cartService.getCart(cid)
                 let new_products = []
                 let is_in = false
                 if(cart.products.length === 0){
@@ -104,7 +85,7 @@ router.put(
                 if(!is_in){
                     new_products.push({_id: pid, units: units})
                 }
-                let updated = await Cart.updateOne({ _id: cart._id }, { $set: { products: new_products } })
+                let updated = await cartService.updateCart({ _id: cart._id }, { $set: { products: new_products } })
                 return res.json({
                     status: 200,
                     updated,
@@ -115,19 +96,14 @@ router.put(
             next(error)
         }
     }
-)
 
-
-
-router.delete(
-    '/:cid/product/:pid/:units',
-    async (req, res, next) => {
+    deleteCart = async (req, res, next) => {
         try {
             if (req.body && req.params.cid && req.params.pid && req.params.units) {
                 const cid = req.params.cid
                 const pid = req.params.pid
                 const units = req.params.units
-                const cart = await Cart.findOne({_id:cid})
+                const cart = await cartService.getCart(cid)
                 if(!cart){
                     return res.json({
                         status: 404,
@@ -145,7 +121,7 @@ router.delete(
                     }
                     data.push({...p, units: p.units-units})
                 })
-                await Cart.updateOne({_id:cid}, {$set:{products: data}})
+                await cartService.updateCart({_id:cid}, {$set:{products: data}})
                 return res.json({
                     status: 200,
                     cid,
@@ -156,6 +132,6 @@ router.delete(
             next(error)
         }
     }
-)
+}
 
-export default router
+export default CartController

@@ -2,7 +2,7 @@ import passport from "passport";
 import { Strategy } from "passport-local";
 import GHStrategy from "passport-github2"
 import jwt from "passport-jwt"
-import User from "../models/user_model.js";
+import User from "../dao/mongo/models/user_model.js";
 
 const { GH_CLIENT_ID, GH_CLIENT_SECRET } = process.env
 const callback = "http://localhost:8080/api/auth/github/callback"
